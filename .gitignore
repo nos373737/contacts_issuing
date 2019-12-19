@@ -1,0 +1,5 @@
+__pycache__/
+.vscode/
+venv/
+cutting_map.xlsx
+help_doc.txt
