@@ -1,15 +1,27 @@
 <!doctype html>
 <title>Issuing contacts</title>
-{% if name %}
-  <h1>Hello {{ name }}!</h1>
-{% else %}
-  <h1>Hello, World!</h1>
-{% endif %}
-
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <link href="{{url_for('static',filename='css/table.css')}}" rel="stylesheet">
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<link href="{{url_for('static',filename='css/navbar.css')}}" rel="stylesheet">
+<link href="{{url_for('static',filename='css/body.css')}}" rel="stylesheet">
+<link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}">
+<link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+
+<div class="container">
+    <div class="logo">
+      <img src="https://www.prettl.com/fileadmin/user_upload/Logo.png" alt="PRETTL"/>
+      </div>
+    <nav>
+      <ul>
+      <li>Home</li>
+      <li>Services</li>
+      <li>Products</li>
+      <li>Clients</li>
+      </ul>
+    </nav>
+</div>
+    <hr />
 
 <div id="user-list">
       <table>
@@ -24,6 +36,29 @@
             <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
           </tr>
-      {% endfor %}
+          {% endfor %}
       </table>
 </div>
+
+<footer class="wrapper">
+    <div id="footer-text" class="footerBottom">
+
+        Copyright (c) 2019 AEU.
+
+    </div>
+    <div class="footerBottom">
+        <div class="socBox">
+            <a id="social-icon" href="https://www.facebook.com/aeu.chernivtsi" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a id="social-icon" href="https://www.instagram.com/automotive_electric_ukraine/" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+    <div id="footer-text" class="footerBottom">
+
+        All rights are reserved
+
+    </div>
+</footer>

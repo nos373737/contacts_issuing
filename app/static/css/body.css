@@ -1,0 +1,46 @@
+html {
+    width: 100%;
+    height: 100%;
+    background-image: url('images/hintergrund.png');
+    background-size: cover;
+}
+
+footer {
+    position: absolute;
+    background-color: #dc3545;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-style: bold;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;            /* Footer height */
+  }
+
+  footer .footerBottom {
+    min-height: 40px;
+    text-align: center;
+    padding-top: 1%;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+}
+
+footer .footerBottomBox .footerBottom .socBox a {
+    margin: 0 5px;
+}
+
+#social-icon {
+    color: black;
+    font-size: 20px;
+    margin: 0 5px;
+}
+
+#footer-text {
+    font-size: 110%;
+}
