@@ -16,49 +16,37 @@
       <ul>
       <li>Home</li>
       <li>Services</li>
-      <li>Products</li>
+      <li><a href="{{ url_for('check_contacts_post') }}">Check Contacts for SAP №</a></li>
       <li>Clients</li>
       </ul>
     </nav>
 </div>
     <hr />
 
-<div id="user-list">
-      <table>
-          <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-          </tr>  
-          {% for user in users %}
-          <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-          </tr>
-          {% endfor %}
-      </table>
-</div>
+    {% block content %}
+    {% endblock %}
 
-<footer class="wrapper">
-    <div id="footer-text" class="footerBottom">
 
-        Copyright (c) 2019 AEU.
-
-    </div>
-    <div class="footerBottom">
-        <div class="socBox">
-            <a id="social-icon" href="https://www.facebook.com/aeu.chernivtsi" target="_blank">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a id="social-icon" href="https://www.instagram.com/automotive_electric_ukraine/" target="_blank">
-                <i class="fab fa-instagram"></i>
-            </a>
+    <footer class="wrapper">
+        <div id="footer-text" class="footerBottom">
+    
+            Copyright (c) 2019 AEU.
+    
         </div>
-    </div>
-    <div id="footer-text" class="footerBottom">
-
-        All rights are reserved
-
-    </div>
-</footer>
+        <div class="footerBottom">
+            <div class="socBox">
+                <a id="social-icon" href="https://www.facebook.com/aeu.chernivtsi" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a id="social-icon" href="https://www.instagram.com/automotive_electric_ukraine/" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+        <div id="footer-text" class="footerBottom">
+    
+            All rights are reserved
+    
+        </div>
+    </footer>
+    

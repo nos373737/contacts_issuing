@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="container">
+    <table>
+        <tr>
+          <th>ID</th>
+          <th>SAP Number</th>
+          <th>APTIV Contacts</th>
+          <th>APTIV Contacts</th>
+        </tr>  
+        {% for num in numbers %}
+        <tr>
+          <td>{{ num.id }}</td>
+          <td>{{ num.sap_number }}</td>
+          {% for el in num.contacts %}
+            <td>{{ el.description }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

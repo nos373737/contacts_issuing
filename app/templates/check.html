@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+CHECK CONTACTS BY SAP NUMBER!!!
+<form method="POST">
+    <input type="text", name="text">
+    <input type="submit">
+</form>
+<tr>
+    <td>FOR SAPNUMBER: {{ search_result.sap_number }} YOU NEED NEXT CONTACTS:</td>
+    {% for el in search_result.contacts %}
+      <td>{{ el.description }}</td>
+    {% endfor %}
+  </tr>
+<div id="container">
+    <table>
+        <tr>
+          <th>APTIV Contact Number</th>
+        </tr>  
+        {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
