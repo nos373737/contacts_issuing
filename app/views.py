@@ -1,7 +1,9 @@
 import pyodbc
 from app import app
 from flask import request, render_template, url_for
-from app.models import User, ContactNumber, SapNumber
+from app.models import User, ContactNumber, SapNumber, BaysQueue
+from queue import Queue
+ 
 
 # @app.route('/')
 # def hello_world():
@@ -13,13 +15,15 @@ from app.models import User, ContactNumber, SapNumber
 #             res.append(row)    
 #     return str(res)
 
+#Get the value of bays thatfrom db
+q = Queue()
+bays_all = BaysQueue.query.all()
+for el in bays_all:
+        q.put(el)
+
 @app.route('/')
 def homepage():
         return render_template('base.html')
-
-# @app.route('/check-contacts-for-sap-number')
-# def check_contacts():
-#         return render_template('check.html')
 
 @app.route('/check-contacts-for-sap-number', methods=('GET', 'POST'))
 def check_contacts_post():
@@ -27,14 +31,19 @@ def check_contacts_post():
                 text = request.form['text']
                 search_result = SapNumber.query.filter_by(sap_number = text).first()
                 return render_template('check.html', search_result=search_result)
-        return render_template('check.html')
+        return render_template('check.html', search_result=None)
 
 @app.route('/user-list')
 def db_config():
-        users = User.query.all()
-        return render_template('users.html', name = 'PRETTL AEU', users = users)
+        bays_list = list(q.queue)
+        return render_template('users.html', bays_list=bays_list)
         #return str([(u.id, u.username, u.email) for u in User.query.all()])
         
+@app.route('/check-bays')
+def get_el_from_queue():
+        result = q.get_nowait()
+        return render_template('users.html', result=result)
+
 @app.route('/numbers')
 def numbers_list():
         numbers = ContactNumber.query.all()

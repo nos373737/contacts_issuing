@@ -1,20 +1,37 @@
 {% extends 'base.html' %}
 
+<!-- {% block head_js %}
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"> </script>
+  <script type=text/javascript>
+    alert(jQuery.fn.jquery);
+    var url = "http://stackoverflow.com";
+   $(function() { $("#del_from_queue").click(function (event) { $(location).attr('href',url);
+    function(data) { }); return false; }); }); 
+    
+    
+    </script>
+
+{% endblock head_js %} -->
+
 {% block content %}
 <div id="container">
     <table>
         <tr>
           <th>ID</th>
-          <th>Username</th>
-          <th>Email</th>
+          <th>QUEUE</th>
+          <th>Serial Number</th>
+          <th>Contact Number</th>
         </tr>  
-        {% for user in users %}
+        {% for el in bays_list %}
         <tr>
-          <td>{{ user.id }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
+          <td>{{ el.id }}</td>
+          <td>{{ el.serial_number }}</td>
+          <td>{{ el.contact_number }}</td>
+          <td>{{ el.return_date }}</td>
         </tr>
         {% endfor %}
     </table>
+    <a href="check-bays">ta da</a>
+    {{ result }}
 </div>
 {% endblock %}

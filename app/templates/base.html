@@ -8,9 +8,11 @@
 <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}">
 <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
 
+{% block head_js %}
+{% endblock head_js %}
 <div class="container">
     <div class="logo">
-      <img src="https://www.prettl.com/fileadmin/user_upload/Logo.png" alt="PRETTL"/>
+      <img src="{{url_for('static', filename='css/images/logo_basic.png')}}" />
       </div>
     <nav>
       <ul>
