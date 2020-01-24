@@ -1,6 +1,12 @@
 from . import db
-import datetime
-from sqlalchemy import Column, Integer, DateTime
+import datetime, enum
+from sqlalchemy import Column, Integer, DateTime, Enum
+from sqlalchemy.orm import relationship
+
+#Enumeration in Rework
+class StatusEnum(enum.Enum):
+    ok = "OK"
+    nok = "NOK"
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,7 +21,9 @@ class SapNumber(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sap_number = db.Column(db.String(8), unique=True, nullable=False)
     contacts = db.relationship("ContactNumber", backref="sap_num")
-   
+
+    def __repr__(self):
+        return "({0})".format(self.sap_number)
 
 class ContactNumber(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,7 +31,7 @@ class ContactNumber(db.Model):
     sap_num_id = db.Column(db.Integer, db.ForeignKey("sap_number.id"))
 
     def __repr__(self):
-        return "({0})".format(self.description)
+        return "{0}".format(self.description)
 
 class BaysQueue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -37,5 +45,9 @@ class BaysQueue(db.Model):
 
 class History(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    sap_number_id = Column(Integer, ForeignKey("sap_number.id"), nullable = False)
+    sap_number_id = db.Column(db.Integer, db.ForeignKey("sap_number.id"), nullable = False)
     sap_number = relationship("SapNumber")
+    dpn = db.Column(db.String(8), nullable=False)
+    serial_number = db.Column(db.String(20), nullable=False)
+    create_date = db.Column(DateTime, default=datetime.datetime.now())
+    status = db.Column(db.Enum(StatusEnum))

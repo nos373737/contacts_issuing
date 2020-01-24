@@ -1,8 +1,9 @@
 import pyodbc
 from app import app
-from flask import request, render_template, url_for
+from flask import request, render_template, url_for, redirect
 from app.models import User, ContactNumber, SapNumber, BaysQueue
 from queue import Queue
+from app.forms import HistoryForm, HistoryTest
  
 
 # @app.route('/')
@@ -53,3 +54,12 @@ def numbers_list():
 def sap_numbers_list():
         numbers = SapNumber.query.all()
         return render_template('sap_number_list.html', numbers = numbers)
+
+@app.route('/history', methods=['GET', 'POST'])
+def index():
+    form = HistoryTest()
+#     if request.method == 'POST':
+#         city = City.query.filter_by(id=form.city.data).first()
+#         return '<h1>State: {}, City: {}</h1>'.format(form.state.data, city.name)
+
+    return render_template('history.html', form=form)

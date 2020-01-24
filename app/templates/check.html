@@ -13,17 +13,5 @@ CHECK CONTACTS BY SAP NUMBER!!!
     {% for el in search_result.contacts %}
       <td>{{ el.description }}</td>
     {% endfor %}
-  </tr>
-<div id="container">
-    <table>
-        <tr>
-          <th>APTIV Contact Number</th>
-        </tr>  
-        {% for user in users %}
-        <tr>
-          <td>{{ user.id }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+</tr>
 {% endblock %}

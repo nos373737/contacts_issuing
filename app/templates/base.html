@@ -10,14 +10,15 @@
 
 {% block head_js %}
 {% endblock head_js %}
+<body>
 <div class="container">
     <div class="logo">
       <img src="{{url_for('static', filename='css/images/logo_basic.png')}}" />
       </div>
     <nav>
       <ul>
-      <li>Home</li>
-      <li>Services</li>
+      <li><a href="/">Home</a></li>
+      <li>Issue of bays</li>
       <li><a href="{{ url_for('check_contacts_post') }}">Check Contacts for SAP №</a></li>
       <li>Clients</li>
       </ul>
@@ -51,4 +52,4 @@
     
         </div>
     </footer>
-    
+</body> 
