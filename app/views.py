@@ -1,9 +1,10 @@
-import pyodbc
+import pyodbc, datetime, enum
 from app import app
-from flask import request, render_template, url_for, redirect
-from app.models import User, ContactNumber, SapNumber, BaysQueue
+from flask import request, render_template, url_for, redirect, flash
+from app.models import User, ContactNumber, SapNumber, BaysQueue, History
 from queue import Queue
-from app.forms import HistoryForm, HistoryTest
+from app.forms import HistoryForm
+from . import db
  
 
 # @app.route('/')
@@ -56,10 +57,14 @@ def sap_numbers_list():
         return render_template('sap_number_list.html', numbers = numbers)
 
 @app.route('/history', methods=['GET', 'POST'])
-def index():
-    form = HistoryTest()
-#     if request.method == 'POST':
-#         city = City.query.filter_by(id=form.city.data).first()
-#         return '<h1>State: {}, City: {}</h1>'.format(form.state.data, city.name)
-
-    return render_template('history.html', form=form)
+def load_history_form():
+        form = HistoryForm()
+        if request.form:
+                print(request.form)
+                record = History(sap_number_id=request.form.get("sap_number"), dpn=request.form.get("dpn"), serial_number=request.form.get("serial_number"),
+                create_date=datetime.datetime.now(), status=request.form.get("status"))
+                print(record)
+                db.session.add(record)
+                db.session.commit()
+                flash('Record add successfull!!!')
+        return render_template('history.html', form=form)

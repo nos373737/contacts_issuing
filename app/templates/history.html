@@ -3,13 +3,16 @@
 {% block content %}
 
 HISTORY!!!!!!!!!!!!!!
-<tr>
-    
-      <td>{{ form.sap_number }}</td>
-      <td>{{ form.dpn }}</td>
-      <td>{{ form.serial_number }}</td>
-      <td>{{ form.created_date }}</td>
-      <td>{{ form.status }}</td>
-</tr>
+<form action="/history" method="post">
+      <tr>
+            <td>{{ form.csrf_token }}</td>
+            <td>{{ form.sap_number }}</td>
+            <td>{{ form.dpn }}</td>
+            <td>{{ form.serial_number }}</td>
+            <td>{{ form.status }}</td>
+      </tr>
+      <input type="submit" value="ADD">
+      
+</form>
 {% endblock %}
 
