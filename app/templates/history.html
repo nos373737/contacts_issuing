@@ -1,18 +1,62 @@
 {% extends 'base.html' %}
-
+<script>
+      function formctrl(){
+            var x = document.getElementById("dpn").value;
+            alert(x);
+      }
+</script>
 {% block content %}
+      <div class="container">
+            <form action="/bays-issuing" method="post">
+                  <div class="form-row">
+                        <td>{{ form.csrf_token }}</td>
+                        <div class="col-md-3 mb-3">
+                              <label for="sap_number">{{ form.sap_number.label }}</label>
+                                     {{ form.sap_number(class_="custom-select", onkeyup='myFunction()') }}
+                        </div>
+                        <div class="col-md-3 mb-3">
+                                <label for="dpn">{{ form.dpn.label }}</label>
+                                {{ form.dpn(class_="form-control", onkeyup='myFunction()') }}
+                        </div>
+                              
+                  </div>
+                  <div class="form-row">      
+                        <div class="col-md-3 mb-3" style="display: none;">
+                              <label for="status">{{ form.status.label }}</label>
+                               {{ form.status(class_="custom-select") }}
+                        </div>
+                        <div class="col-md-3 mb-3">
+                              <label for="serial_number">{{ form.serial_number.label }}</label>
+                               {{ form.serial_number(class_="form-control") }}
+                        </div>
+                  </div>
+                  <button class="btn btn-primary mb-2" type="submit">ADD</button>
+            </form>
+      </div>
 
-HISTORY!!!!!!!!!!!!!!
-<form action="/history" method="post">
-      <tr>
-            <td>{{ form.csrf_token }}</td>
-            <td>{{ form.sap_number }}</td>
-            <td>{{ form.dpn }}</td>
-            <td>{{ form.serial_number }}</td>
-            <td>{{ form.status }}</td>
-      </tr>
-      <input type="submit" value="ADD">
+      <p>A function is triggered when the user releases a key in the input field. The function outputs the actual key/letter that was released inside the text field.</p>
+
+      <!-- Enter your name: <input type="text" id="fname" onkeyup="myFunction()"> -->
       
-</form>
+      <p>My name is: <span id="demo"></span></p>
+      
+      <script>
+      function myFunction() {
+            sessionStorage.setItem("sap_number", $('#sap_number').val());
+            sessionStorage.setItem("dpn", $('#dpn').val());
+            //var x = document.getElementById("dpn").value;
+            document.getElementById("demo").innerHTML = sessionStorage.getItem("dpn");
+      }
+      
+      window.onload = function() {
+            var dpn = sessionStorage.getItem("dpn");
+            if (dpn !== null) $('#dpn').val(dpn);
+            var sap_number = sessionStorage.getItem("sap_number");
+            if (sap_number !== null) $('#dpn').val(sap_number);
+      }
+
+      </script>
+      
+
 {% endblock %}
 

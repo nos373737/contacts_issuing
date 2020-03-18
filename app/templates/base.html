@@ -1,7 +1,9 @@
 <!doctype html>
 <title>Issuing contacts</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/form-control.js')}}"></script>
+<script src="{{url_for('static',filename='js/jquery-3.4.1.min.js')}}"></script>
+<link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{url_for('static',filename='css/table.css')}}" rel="stylesheet">
 <link href="{{url_for('static',filename='css/navbar.css')}}" rel="stylesheet">
 <link href="{{url_for('static',filename='css/body.css')}}" rel="stylesheet">
@@ -10,46 +12,62 @@
 
 {% block head_js %}
 {% endblock head_js %}
-<body>
-<div class="container">
-    <div class="logo">
-      <img src="{{url_for('static', filename='css/images/logo_basic.png')}}" />
-      </div>
-    <nav>
-      <ul>
-      <li><a href="/">Home</a></li>
-      <li>Issue of bays</li>
-      <li><a href="{{ url_for('check_contacts_post') }}">Check Contacts for SAP №</a></li>
-      <li>Clients</li>
-      </ul>
-    </nav>
+
+{% with errors = get_flashed_messages(category_filter=["error"]) %}
+{% if errors %}
+<div class="alert-message block-message error">
+  <a class="close" href="#">×</a>
+  <ul>
+    {%- for msg in errors %}
+    <li>{{ msg }}</li>
+    {% endfor -%}
+  </ul>
 </div>
-    <hr />
+{% endif %}
+{% endwith %}
+
+{% block body %}
+    <body>
+        <div class="container">
+            <div class="logo">
+                <a href="/"><img src="{{url_for('static', filename='css/images/logo_basic.png')}}" /></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{{ url_for('issuing_bays') }}">Issue of bays</a></li>
+                    <li><a href="{{ url_for('check_contacts_post') }}">Check Contacts for SAP №</a></li>
+                    <li><a href="{{ url_for('issued_bays_list') }}">List of issued Bays</a></li>
+                    <li><a href="{{ url_for('bays_return') }}">Bays Return</a></li>
+                </ul> 
+            </nav>
+        </div>
 
     {% block content %}
     {% endblock %}
 
 
-    <footer class="wrapper">
-        <div id="footer-text" class="footerBottom">
+        <footer class="wrapper">
+            <div id="footer-text" class="footerBottom">
     
-            Copyright (c) 2019 AEU.
+                Copyright (c) 2019 AEU.
     
-        </div>
-        <div class="footerBottom">
-            <div class="socBox">
-                <a id="social-icon" href="https://www.facebook.com/aeu.chernivtsi" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a id="social-icon" href="https://www.instagram.com/automotive_electric_ukraine/" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                </a>
             </div>
-        </div>
-        <div id="footer-text" class="footerBottom">
+            <div class="footerBottom">
+                <div class="socBox">
+                    <a id="social-icon" href="https://www.facebook.com/aeu.chernivtsi" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a id="social-icon" href="https://www.instagram.com/automotive_electric_ukraine/" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div id="footer-text" class="footerBottom">
     
-            All rights are reserved
+                All rights are reserved
     
-        </div>
-    </footer>
-</body> 
+            </div>
+        </footer>
+    </body> 
+{% endblock %}

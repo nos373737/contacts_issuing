@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <div class="container">
+            <form action="/bays-return" method="post">
+                  <div class="form-row">
+                        <td>{{ form.csrf_token }}</td>
+                              <div class="col-md-3 mb-3">
+                              <label for="serial_number">{{ form.serial_number.label }}</label>
+                               {{ form.serial_number(class_="form-control") }}
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                <label for="dpn">{{ form.dpn.label }}</label>
+                                {{ form.dpn(class_="form-control") }}
+                              </div>
+                              
+                  </div>
+                  <div class="form-row">      
+                        <div class="col-md-3 mb-3" style="">
+                              <label for="status">{{ form.status.label }}</label>
+                               {{ form.status(class_="custom-select") }}
+                        </div>
+                       
+                  </div>
+                  <button class="btn btn-primary mb-2" type="submit">ADD</button>
+            </form>
+      </div>
+      
+
+{% endblock %}
+

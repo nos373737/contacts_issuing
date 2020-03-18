@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <table>
+        <tr>
+          <th>ID</th>
+          <th>SAP Number</th>
+          <th>DPN</th>
+          <th>SN</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>  
+        {% for el in issued_bays %}
+        <tr>
+          <td>{{ el.id }}</td>
+          <td>{{ el.sap_number }}</td>
+          <td>{{ el.dpn }}</td>
+          <td>{{ el.serial_number }}</td>
+          <td>{{ el.create_date.strftime("%Y-%m-%d %H:%M:%S") }}</td> 
+          <td>{{ el.status.value }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
