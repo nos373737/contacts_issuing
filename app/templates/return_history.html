@@ -5,20 +5,18 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">SAP NUMBER</th>
+        <th scope="col">SERIAL NUMBER</th>
         <th scope="col">DPN</th>
-        <th scope="col">SN</th>
         <th scope="col">DATE</th>
         <th scope="col">STATUS</th>
       </tr>
     </thead>
     <tbody>
-      {% for el in issued_bays %}
+      {% for el in history %}
       <tr>
         <th scope="row">{{ el.id }}</th>
-        <td>{{ el.sap_number }}</td>
-        <td>{{ el.dpn }}</td>
         <td>{{ el.serial_number }}</td>
+        <td>{{ el.dpn }}</td>
         <td>{{ el.create_date.strftime("%Y-%m-%d %H:%M:%S") }}</td> 
         <td>{{ el.status.value }}</td>
       </tr>

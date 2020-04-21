@@ -1,59 +1,102 @@
 <!doctype html>
-<title>Issuing contacts</title>
-<script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
-<script src="{{url_for('static',filename='js/form-control.js')}}"></script>
-<script src="{{url_for('static',filename='js/jquery-3.4.1.min.js')}}"></script>
+<title>Видача контактів</title>
 <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
-<link href="{{url_for('static',filename='css/table.css')}}" rel="stylesheet">
-<link href="{{url_for('static',filename='css/navbar.css')}}" rel="stylesheet">
 <link href="{{url_for('static',filename='css/body.css')}}" rel="stylesheet">
 <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}">
 <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
-
 {% block head_js %}
+<script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/jquery-3.4.1.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/jquery-3.4.1.slim.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/popper.min.js')}}"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 {% endblock head_js %}
 
-{% with errors = get_flashed_messages(category_filter=["error"]) %}
-{% if errors %}
-<div class="alert-message block-message error">
-  <a class="close" href="#">×</a>
-  <ul>
-    {%- for msg in errors %}
-    <li>{{ msg }}</li>
-    {% endfor -%}
-  </ul>
-</div>
-{% endif %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="alert alert-success alert-dismissible">
+        <ul>
+        {% for category, message in messages %}
+          <li class="{{ category }}"><strong>{{ message }}</strong></li>
+        {% endfor %}
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </ul>
+    </div>
+    
+  {% endif %}
 {% endwith %}
 
 {% block body %}
     <body>
-        <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">AEU</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav ml-auto">
+                <!-- <li class="nav-item active">
+                  <a class="nav-link" href="/">Головна <span class="sr-only">(current)</span></a>
+                </li> -->
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('issuing_bays') }}">Видача бухт</a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('check_contacts_post') }}">Перевірка контакту для SAP №</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('issued_bays_list') }}">Видані бухти</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('bays_return') }}">Повернення бухти</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <div class="btn-group dropleft">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Додатково
+                        </button>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{{ url_for('issued_bays_list') }}">Видані бухти</a>
+                      <a class="dropdown-item" href="{{ url_for('active_return') }}">Активні повернені бухти</a>
+                      <a class="dropdown-item" href="{{ url_for('return_history') }}">Історія поверненя</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="{{ url_for('check_contacts_post') }}">Перевірка контакту для SAP №</a>
+                    </div>
+                    </div>
+                  </li>
+              </ul>
+              <!-- <span class="navbar-text">
+                Navbar text with an inline element
+              </span> -->
+            </div>
+          </nav>
+        <!-- <div class="container">
             <div class="logo">
                 <a href="/"><img src="{{url_for('static', filename='css/images/logo_basic.png')}}" /></a>
             </div>
             <nav>
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="{{ url_for('issuing_bays') }}">Issue of bays</a></li>
-                    <li><a href="{{ url_for('check_contacts_post') }}">Check Contacts for SAP №</a></li>
-                    <li><a href="{{ url_for('issued_bays_list') }}">List of issued Bays</a></li>
-                    <li><a href="{{ url_for('bays_return') }}">Bays Return</a></li>
+                    <li><a href="/">Головна</a></li>
+                    <li><a href="{{ url_for('issuing_bays') }}">Видача бухт</a></li>
+                    <li><a href="{{ url_for('check_contacts_post') }}">Перевірка контакту для SAP №</a></li>
+                    <li><a href="{{ url_for('issued_bays_list') }}">Видані бухти</a></li>
+                    <li><a href="{{ url_for('bays_return') }}">Повернення бухти</a></li>
                 </ul> 
             </nav>
-        </div>
+        </div> -->
 
     {% block content %}
     {% endblock %}
 
-
-        <footer class="wrapper">
-            <div id="footer-text" class="footerBottom">
-    
-                Copyright (c) 2019 AEU.
-    
-            </div>
-            <div class="footerBottom">
+    <footer class="footer">
+        <div class="container">
+          <span class="text-muted">Copyright (c) 2019 AEU.</span>
+        </div>
+        
+    </footer>
+            <!-- <div class="footerBottom">
                 <div class="socBox">
                     <a id="social-icon" href="https://www.facebook.com/aeu.chernivtsi" target="_blank">
                         <i class="fab fa-facebook-f"></i>
@@ -62,12 +105,6 @@
                         <i class="fab fa-instagram"></i>
                     </a>
                 </div>
-            </div>
-            <div id="footer-text" class="footerBottom">
-    
-                All rights are reserved
-    
-            </div>
-        </footer>
+            </div> -->
     </body> 
 {% endblock %}

@@ -8,21 +8,34 @@
                               <div class="col-md-3 mb-3">
                               <label for="serial_number">{{ form.serial_number.label }}</label>
                                {{ form.serial_number(class_="form-control") }}
+                               {% if form.serial_number.errors %}
+                                     <ul id="errors" class="errors">
+                                       {% for error in form.serial_number.errors %}
+                                         <li>{{ error }}</li>
+                                       {% endfor %}
+                                     </ul>
+                              {% endif %}
                               </div>
                               <div class="col-md-3 mb-3">
                                 <label for="dpn">{{ form.dpn.label }}</label>
                                 {{ form.dpn(class_="form-control") }}
-                              </div>
-                              
+                                {% if form.dpn.errors %}
+                                     <ul id="errors" class="errors">
+                                       {% for error in form.dpn.errors %}
+                                         <li>{{ error }}</li>
+                                       {% endfor %}
+                                     </ul>
+                              {% endif %}
+                              </div>     
                   </div>
-                  <div class="form-row">      
-                        <div class="col-md-3 mb-3" style="">
+                  <div class="form-row" style="display: none;">      
+                        <div class="col-md-3 mb-3">
                               <label for="status">{{ form.status.label }}</label>
                                {{ form.status(class_="custom-select") }}
                         </div>
                        
                   </div>
-                  <button class="btn btn-primary mb-2" type="submit">ADD</button>
+                  <button class="btn btn-primary mb-2" type="submit">Підтвердити повернення</button>
             </form>
       </div>
       

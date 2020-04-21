@@ -6,18 +6,18 @@
     <div class="form-row">      
       <div class="col-md-3 mb-3">
         <h2>
-          <label for="search_sap">Search contacts for SAP NUMBER:</label>
+          <label for="search_sap">Пошук контактів для SAP номера:</label>
         </h2>
         <input type="text" class="form-control" id="search_sap" placeholder="SAPNUMBER" name="search_sap">
       </div>
     </div>
-    <button class="btn btn-primary mb-4" type="submit">FIND</button>
+    <button class="btn btn-primary mb-4" type="submit">Знайти</button>
   </form>
   
     <table id="check-info">
         <tr>
-          <th>FOR SAPNUMBER: </th>
-          <th>YOU NEED NEXT CONTACTS:</th>
+          <th>Для  SAP номера: </th>
+          <th>Вам побтрібні наступні контакти:</th>
         </tr>
         <tr>
           <td>{{ search_result.sap_number }}</td>
@@ -28,8 +28,6 @@
           </td>
         </tr>
     </table>
-    
-  
 </div>
 
 {% endblock %}

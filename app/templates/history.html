@@ -1,10 +1,5 @@
 {% extends 'base.html' %}
-<script>
-      function formctrl(){
-            var x = document.getElementById("dpn").value;
-            alert(x);
-      }
-</script>
+
 {% block content %}
       <div class="container">
             <form action="/bays-issuing" method="post">
@@ -12,11 +7,25 @@
                         <td>{{ form.csrf_token }}</td>
                         <div class="col-md-3 mb-3">
                               <label for="sap_number">{{ form.sap_number.label }}</label>
-                                     {{ form.sap_number(class_="custom-select", onkeyup='myFunction()') }}
+                                     {{ form.sap_number(class_="form-control") }}
+                                     {% if form.sap_number.errors %}
+                                     <ul id="errors" class="errors">
+                                       {% for error in form.sap_number.errors %}
+                                         <li>{{ error }}</li>
+                                       {% endfor %}
+                                     </ul>
+                                   {% endif %}
                         </div>
                         <div class="col-md-3 mb-3">
                                 <label for="dpn">{{ form.dpn.label }}</label>
-                                {{ form.dpn(class_="form-control", onkeyup='myFunction()') }}
+                                {{ form.dpn(class_="form-control") }}
+                                {% if form.dpn.errors %}
+                                     <ul id="errors" class="errors">
+                                       {% for error in form.dpn.errors %}
+                                         <li>{{ error }}</li>
+                                       {% endfor %}
+                                     </ul>
+                                   {% endif %}
                         </div>
                               
                   </div>
@@ -28,35 +37,18 @@
                         <div class="col-md-3 mb-3">
                               <label for="serial_number">{{ form.serial_number.label }}</label>
                                {{ form.serial_number(class_="form-control") }}
+                               {% if form.serial_number.errors %}
+                                     <ul id="errors" class="errors">
+                                       {% for error in form.serial_number.errors %}
+                                         <li>{{ error }}</li>
+                                       {% endfor %}
+                                     </ul>
+                                   {% endif %}
                         </div>
                   </div>
-                  <button class="btn btn-primary mb-2" type="submit">ADD</button>
+                  <button class="btn btn-primary mb-2" type="submit">Видати бухту</button>
             </form>
       </div>
-
-      <p>A function is triggered when the user releases a key in the input field. The function outputs the actual key/letter that was released inside the text field.</p>
-
-      <!-- Enter your name: <input type="text" id="fname" onkeyup="myFunction()"> -->
-      
-      <p>My name is: <span id="demo"></span></p>
-      
-      <script>
-      function myFunction() {
-            sessionStorage.setItem("sap_number", $('#sap_number').val());
-            sessionStorage.setItem("dpn", $('#dpn').val());
-            //var x = document.getElementById("dpn").value;
-            document.getElementById("demo").innerHTML = sessionStorage.getItem("dpn");
-      }
-      
-      window.onload = function() {
-            var dpn = sessionStorage.getItem("dpn");
-            if (dpn !== null) $('#dpn').val(dpn);
-            var sap_number = sessionStorage.getItem("sap_number");
-            if (sap_number !== null) $('#dpn').val(sap_number);
-      }
-
-      </script>
-      
 
 {% endblock %}
 

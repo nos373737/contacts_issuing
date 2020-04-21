@@ -1,23 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div id="container">
-    <table>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">SAP NUMBER</th>
+      <th scope="col">APTIV Contacts</th>
+      <th scope="col">APTIV Contacts</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for num in numbers %}
         <tr>
-          <th>ID</th>
-          <th>SAP Number</th>
-          <th>APTIV Contacts</th>
-          <th>APTIV Contacts</th>
-        </tr>  
-        {% for num in numbers %}
-        <tr>
-          <td>{{ num.id }}</td>
+          <th scope="row">{{ num.id }}</th>
           <td>{{ num.sap_number }}</td>
           {% for el in num.contacts %}
             <td>{{ el.description }}</td>
           {% endfor %}
         </tr>
         {% endfor %}
-    </table>
-</div>
+  </tbody>
+</table>
 {% endblock %}
