@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="column is-4 is-offset-4">
+        <h3 class="title">Login</h3>
+        <div class="box">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                    <div class="notification is-danger">
+                        {{ messages[0] }}
+                    </div>
+            {% endif %}
+            {% endwith %}
+            <form method="POST" action="/login">
+                <div class="form-group">
+                    <td>{{ form.csrf_token }}</td>
+                    <div class="col-md-3 mb-3">
+                          <label for="username">{{ form.username.label }}</label>
+                                 {{ form.username(class_="form-control") }}
+                                 {% if form.username.errors %}
+                                 <ul id="errors" class="errors">
+                                   {% for error in form.username.errors %}
+                                     <li>{{ error }}</li>
+                                   {% endfor %}
+                                 </ul>
+                               {% endif %}
+                    </div>
+    
+                    <div class="col-md-3 mb-3">
+                        <label for="password">{{ form.password.label }}</label>
+                        {{ form.password(class_="form-control") }}
+                        {% if form.password.errors %}
+                             <ul id="errors" class="errors">
+                               {% for error in form.password.errors %}
+                                 <li>{{ error }}</li>
+                               {% endfor %}
+                             </ul>
+                           {% endif %}
+                </div>
+                <!-- <div class="field">
+                    <label class="checkbox">
+                        <input type="checkbox">
+                        Remember me
+                    </label>
+                </div> -->
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember">
+                    <label class="form-check-label" for="remember">Remember me</label>
+                  </div>
+                <button class="btn btn-primary mb-2" type="submit">Увійти</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

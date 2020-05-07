@@ -1,5 +1,6 @@
 from app import app
 from . import db
+from werkzeug.security import check_password_hash
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.ext.sqlalchemy.orm import model_form
 from wtforms.validators import DataRequired, Length, InputRequired, ValidationError
@@ -11,7 +12,7 @@ from wtforms import (StringField,
                      SelectField,
                      Form)
 from flask_wtf import FlaskForm 
-from app.models import History, SapNumber, Return, ContactNumber, ReturnStatus, StatusEnum
+from app.models import History, SapNumber, Return, ContactNumber, ReturnStatus, StatusEnum, User
 
 # def all_sap_numbers():
 #     return db.session.query(SapNumber).all()
@@ -77,3 +78,17 @@ class ReturnForm(FlaskForm):
     dpn = StringField(("DPN"), [InputRequired(), my_length_check, dpn_exist])
     status = SelectField(u'Status',
     choices=[(member.value, name.capitalize()) for name, member in ReturnStatus.__members__.items()])
+
+# Validation for Login Form
+
+def user_check(form, field):
+    user = User.query.filter_by(username=field.data).first()
+    if not user or not check_password_hash(user.password, form.password.data):
+        raise ValidationError(message = u'Будь ласка перевірте авторизаційні дані!')
+
+# Login form
+
+class LoginForm(FlaskForm):
+    username = StringField(("Username"), [InputRequired(), user_check])
+    password = PasswordField(("Password"), [InputRequired(),
+    Length(8, message="Довжина паролю повинна складати мінімум 8 символів!")])

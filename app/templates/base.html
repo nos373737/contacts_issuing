@@ -40,32 +40,66 @@
                 <!-- <li class="nav-item active">
                   <a class="nav-link" href="/">Головна <span class="sr-only">(current)</span></a>
                 </li> -->
+                {% if current_user.is_authenticated %} 
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('issuing_bays') }}">Видача бухт</a>
+                  <a class="nav-link" href="{{ url_for('main.issuing_bays') }}">Видача бухт</a>
                 </li>
+                {% endif %}
                 <!-- <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('check_contacts_post') }}">Перевірка контакту для SAP №</a>
+                  <a class="nav-link" href="{{ url_for('main.check_contacts_post') }}">Перевірка контакту для SAP №</a>
                 </li> -->
                 <!-- <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('issued_bays_list') }}">Видані бухти</a>
+                    <a class="nav-link" href="{{ url_for('main.issued_bays_list') }}">Видані бухти</a>
                 </li> -->
+                {% if current_user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('bays_return') }}">Повернення бухти</a>
+                    <a class="nav-link" href="{{ url_for('main.bays_return') }}">Повернення бухти</a>
                 </li>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                  <a href="{{ url_for('main.profile') }}" class="nav-link">
+                    Профіль
+                  </a>
+                </li>
+                {% endif %}
+                {% if not current_user.is_authenticated %}
+                <li class="nav-item">
+                  <a href="{{ url_for('auth.login') }}" class="nav-link">
+                    Увійти
+                  </a>
+                </li>
+                {% endif %}
+                {% if not current_user.is_authenticated %}
+                <li class="nav-item">
+                  <a href="{{ url_for('auth.signup') }}" class="nav-link">
+                    Зареєструватись
+                  </a>
+                </li>
+                {% endif %}
+                {% if current_user.is_authenticated %}  
+                <li class="nav-item">
+                  <a href="{{ url_for('auth.logout') }}" class="nav-link">
+                    Вийти
+                  </a>
+                </li>
+                {% endif %}
+                {% if current_user.is_authenticated %}              
                 <li class="nav-item dropdown">
                     <div class="btn-group dropleft">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Додатково
                         </button>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{{ url_for('issued_bays_list') }}">Видані бухти</a>
-                      <a class="dropdown-item" href="{{ url_for('active_return') }}">Активні повернені бухти</a>
-                      <a class="dropdown-item" href="{{ url_for('return_history') }}">Історія поверненя</a>
+                      <a class="dropdown-item" href="{{ url_for('main.issued_bays_list') }}">Видані бухти</a>
+                      <a class="dropdown-item" href="{{ url_for('main.active_return') }}">Активні повернені бухти</a>
+                      <a class="dropdown-item" href="{{ url_for('main.return_history') }}">Історія поверненя</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="{{ url_for('check_contacts_post') }}">Перевірка контакту для SAP №</a>
+                      <a class="dropdown-item" href="{{ url_for('main.check_contacts_post') }}">Перевірка контакту для SAP №</a>
                     </div>
                     </div>
                   </li>
+                  {% endif %}
               </ul>
               <!-- <span class="navbar-text">
                 Navbar text with an inline element
@@ -79,10 +113,10 @@
             <nav>
                 <ul>
                     <li><a href="/">Головна</a></li>
-                    <li><a href="{{ url_for('issuing_bays') }}">Видача бухт</a></li>
-                    <li><a href="{{ url_for('check_contacts_post') }}">Перевірка контакту для SAP №</a></li>
-                    <li><a href="{{ url_for('issued_bays_list') }}">Видані бухти</a></li>
-                    <li><a href="{{ url_for('bays_return') }}">Повернення бухти</a></li>
+                    <li><a href="{{ url_for('main.issuing_bays') }}">Видача бухт</a></li>
+                    <li><a href="{{ url_for('main.check_contacts_post') }}">Перевірка контакту для SAP №</a></li>
+                    <li><a href="{{ url_for('main.issued_bays_list') }}">Видані бухти</a></li>
+                    <li><a href="{{ url_for('main.bays_return') }}">Повернення бухти</a></li>
                 </ul> 
             </nav>
         </div> -->

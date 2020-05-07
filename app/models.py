@@ -2,6 +2,8 @@ from . import db
 import datetime, enum
 from sqlalchemy import Column, Integer, DateTime, Enum
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash
 
 #Enumeration in Rework
 class StatusEnum(enum.Enum):
@@ -12,14 +14,21 @@ class ReturnStatus(enum.Enum):
     new = "NEW"
     recycled = "RECYCLED"
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
 
     def __repr__(self):
-        return "({0}, {1}, {2})".format(self.id, self.username, self.email)
+        return "({0}, {1})".format(self.id, self.username)
 
+    @classmethod
+    def create(cls, **kwargs):
+        param = kwargs.items()
+        record = cls(username=kwargs.get('username'),
+            password=generate_password_hash(kwargs.get('password')))
+        db.session.add(record)
+        db.session.commit()
 
 class SapNumber(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -36,15 +45,6 @@ class ContactNumber(db.Model):
 
     def __repr__(self):
         return "{0}".format(self.description)
-
-# class BaysQueue(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     serial_number = db.Column(db.String(20), nullable=False)
-#     contact_number = db.Column(db.String(8), nullable=False)
-#     return_date = db.Column(DateTime, default=datetime.datetime.now())
-
-#     def __repr__(self):
-#         return "({0}, {1}, {2}, {3})".format(self.id, self.serial_number, self.contact_number, self.return_date)
 
 
 class History(db.Model):

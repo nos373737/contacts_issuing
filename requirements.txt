@@ -1,0 +1,36 @@
+apispec[yaml]==1.1.1
+attrs==19.1.0             # via jsonschema
+babel==2.6.0              # via flask-babel
+click==7.0
+colorama==0.4.1
+cups                      #cups server
+defusedxml==0.5.0         # via python3-openid
+flask-jwt-extended==3.18.0
+flask-sqlalchemy==2.4.0
+flask-wtf==0.14.2
+flask==1.1.1
+itsdangerous==1.1.0       # via flask
+jinja2==2.10.1            # via flask, flask-babel
+jsonschema==3.0.1
+markupsafe==1.1.1         # via jinja2
+marshmallow-enum==1.4.1
+marshmallow-sqlalchemy==0.16.2
+marshmallow==2.18.0
+prison==0.1.2
+pyjwt==1.7.1
+pyrsistent==0.14.11       # via jsonschema
+python-dateutil==2.8.0
+pytz==2018.9              # via babel
+pyyaml==5.1               # via apispec
+six==1.14.0               # via flask-jwt-extended, jsonschema, prison, pyrsistent, python-dateutil, sqlalchemy-utils
+sqlalchemy-utils==0.33.9
+sqlalchemy==1.3.13         # via flask-sqlalchemy, marshmallow-sqlalchemy, sqlalchemy-utils
+werkzeug==0.16.1          # via flask, flask-jwt-extended
+wtforms==2.2.1            # via flask-wtf
+python-escpos	          # via print barcode
+python-barcode	          # via generating barcode 
+openpyxl                  # for reporting
+pyodbc==4.0.30
+setuptools==41.2.0
+traitlets==4.3.3
+wcwidth==0.1.8  
