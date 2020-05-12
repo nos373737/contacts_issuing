@@ -2,7 +2,7 @@
 
 {% block content %}
   <table class="table table-sm">
-    <thead>
+    <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
         <th scope="col">SAP NUMBER</th>
@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for el in issued_bays %}
+      {% for el in issued_bays.items %}
       <tr>
         <th scope="row">{{ el.id }}</th>
         <td>{{ el.sap_number }}</td>
@@ -25,4 +25,26 @@
       {% endfor %}
     </tbody>
   </table>
+<!-- Pagination button -->
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">  
+    {% for page_num in issued_bays.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if issued_bays.page == page_num %}
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('main.issued_bays_list', page=page_num) }}"> {{ page_num }}</a>
+        </li>
+      {% else %}  
+        <li class="page-item active">
+          <a class="page-link" href="{{ url_for('main.issued_bays_list', page=page_num) }}"> {{ page_num }}</a>
+        </li>
+      {% endif %} 
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link">...</span>
+    </li>
+    {% endif %}
+    {% endfor %} 
+  </ul>
+</nav>
 {% endblock %}

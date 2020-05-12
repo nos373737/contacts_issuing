@@ -2,9 +2,6 @@
 
 {% block content %}
 <div class="container">
-    <div class="column is-4 is-offset-4">
-        <h3 class="title">Login</h3>
-        <div class="box">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
                     <div class="notification is-danger">
@@ -13,6 +10,7 @@
             {% endif %}
             {% endwith %}
             <form method="POST" action="/login">
+              <h3 class="title" style="margin-left: 10%;">Вхід</h3>
                 <div class="form-group">
                     <td>{{ form.csrf_token }}</td>
                     <div class="col-md-3 mb-3">
@@ -45,13 +43,11 @@
                     </label>
                 </div> -->
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="remember">
-                    <label class="form-check-label" for="remember">Remember me</label>
+                    <input type="checkbox" class="form-check-input" id="remember" >
+                    <label class="form-check-label" for="remember" >Remember me</label>
                   </div>
-                <button class="btn btn-primary mb-2" type="submit">Увійти</button>
+                <button class="btn btn-primary mb-2" type="submit" style="margin-left: 10%; margin-top: 1%;">Увійти</button>
             </form>
-        </div>
-    </div>
 </div>
 
 {% endblock %}

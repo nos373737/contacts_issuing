@@ -70,14 +70,17 @@ def issuing_bays():
                 dpn = request.form.get("dpn"),
                 serial_number = request.form.get("serial_number"),
                 status = StatusEnum.ok)
-                flash("Бухта додана успішно!", 'info')
+                flash("Бухта видана успішно!", 'success')
                 return redirect(url_for('main.issuing_bays'))
         return render_template('history.html', form=form)
 
 @main.route('/issued-bays-list')
 @login_required
 def issued_bays_list():
-        issued_bays = History.query.all()
+        page = request.args.get('page', 1, type=int)
+        issued_bays = History.query\
+                .order_by(History.create_date.desc())\
+                .paginate(page=page, per_page=20)
         return render_template('issued_bays_list.html', issued_bays = issued_bays)
 
 @main.route('/bays-return', methods=['GET', 'POST'])
@@ -98,11 +101,18 @@ def bays_return():
 @main.route('/return-history')
 @login_required
 def return_history():
-        history = Return.query.all()
+        page = request.args.get('page', 1, type=int)
+        history = Return.query\
+                .order_by(Return.create_date.desc())\
+                .paginate(page=page, per_page=20)
         return render_template('return_history.html', history = history)
 
 @main.route('/active-return')
 @login_required
 def active_return():
-        active = Return.query.filter_by(status = ReturnStatus.new).all()
+        page = request.args.get('page', 1, type=int)
+        active = Return.query\
+                .filter_by(status = ReturnStatus.new)\
+                .order_by(Return.create_date.desc())\
+                .paginate(page=page, per_page=20)
         return render_template('active_return.html', active = active)

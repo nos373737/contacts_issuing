@@ -30,7 +30,7 @@
 
 {% block body %}
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
             <a class="navbar-brand" href="/">AEU</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -70,13 +70,13 @@
                   </a>
                 </li>
                 {% endif %}
-                {% if not current_user.is_authenticated %}
+                <!-- {% if not current_user.is_authenticated %}
                 <li class="nav-item">
                   <a href="{{ url_for('auth.signup') }}" class="nav-link">
                     Зареєструватись
                   </a>
                 </li>
-                {% endif %}
+                {% endif %} -->
                 {% if current_user.is_authenticated %}  
                 <li class="nav-item">
                   <a href="{{ url_for('auth.logout') }}" class="nav-link">
@@ -124,7 +124,7 @@
     {% block content %}
     {% endblock %}
 
-    <footer class="footer">
+    <footer class="footer" style="background-color: #e3f2fd;">
         <div class="container">
           <span class="text-muted">Copyright (c) 2019 AEU.</span>
         </div>

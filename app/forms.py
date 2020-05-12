@@ -84,7 +84,7 @@ class ReturnForm(FlaskForm):
 def user_check(form, field):
     user = User.query.filter_by(username=field.data).first()
     if not user or not check_password_hash(user.password, form.password.data):
-        raise ValidationError(message = u'Будь ласка перевірте авторизаційні дані!')
+        raise ValidationError(message = u'Будь ласка перевірте авторизаційні дані! Невірний логін або пароль!')
 
 # Login form
 
