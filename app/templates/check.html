@@ -5,29 +5,32 @@
   <form method="POST">
     <div class="form-row">      
       <div class="col-md-3 mb-3">
-        <h2>
-          <label for="search_sap">Пошук контактів для SAP номера:</label>
-        </h2>
+          <legend class="border-bottom mb-4">Пошук контактів для SAP номера:</legend>
         <input type="text" class="form-control" id="search_sap" placeholder="SAPNUMBER" name="search_sap">
       </div>
     </div>
-    <button class="btn btn-primary mb-4" type="submit">Знайти</button>
+    <button class="btn btn-outline-info mb-3" type="submit">Знайти</button>
   </form>
-  
-    <table id="check-info">
-        <tr>
-          <th>Для  SAP номера: </th>
-          <th>Вам побтрібні наступні контакти:</th>
-        </tr>
-        <tr>
-          <td>{{ search_result.sap_number }}</td>
-          <td>
-            {% for el in search_result.contacts %}
-              {{ el.description }}
-            {% endfor %}
-          </td>
-        </tr>
-    </table>
+  <legend class="border-top mb-4"></legend>
+  <table class="table table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Для  SAP номера: </th>
+        <th scope="col">Вам побтрібні наступні контакти:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">{{ search_result.sap_number }}</th>
+        <th scope="row">
+          {% for el in search_result.contacts %}
+            {{ el.description }}
+          {% endfor %}
+        </th>
+      </tr>
+    </tbody>
+  </table>
+  <legend class="border-bottom mb-4"></legend>
 </div>
 
 {% endblock %}

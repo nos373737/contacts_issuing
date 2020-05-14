@@ -33,4 +33,5 @@ openpyxl                  # for reporting
 pyodbc==4.0.30
 setuptools==41.2.0
 traitlets==4.3.3
-wcwidth==0.1.8  
+wcwidth==0.1.8 
+Pillow 

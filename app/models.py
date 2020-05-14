@@ -1,3 +1,4 @@
+# coding: utf-8
 from . import db
 import datetime, enum
 from sqlalchemy import Column, Integer, DateTime, Enum
@@ -14,19 +15,30 @@ class ReturnStatus(enum.Enum):
     new = "NEW"
     recycled = "RECYCLED"
 
+class EmployeeGroup(enum.Enum):
+    admin = "Admin"
+    user = "User"
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    pib = db.Column(db.Unicode(50))
+    tab_nomer = db.Column(db.String(10), unique=True)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    group = db.Column(db.Enum(EmployeeGroup), default=EmployeeGroup.user)
 
     def __repr__(self):
-        return "({0}, {1})".format(self.id, self.username)
+        return "({0}, {1}, {2})".format(self.id, self.username, self.image_file)
 
     @classmethod
     def create(cls, **kwargs):
         param = kwargs.items()
         record = cls(username=kwargs.get('username'),
-            password=generate_password_hash(kwargs.get('password')))
+            password=generate_password_hash(kwargs.get('password')),
+            pib=kwargs.get('pib'),
+            tab_nomer=kwargs.get('tab_nomer'),
+            group = kwargs.get('group'))
         db.session.add(record)
         db.session.commit()
 
@@ -74,3 +86,10 @@ class Return(db.Model):
     dpn = db.Column(db.String(8), nullable=False)
     create_date = db.Column(DateTime, default=datetime.datetime.now())
     status = db.Column(db.Enum(ReturnStatus))
+
+class DPN(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    dpn = db.Column(db.String(8), unique=True, nullable=False)
+
+    def __repr__(self):
+        return "{0}".format(self.dpn)

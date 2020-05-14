@@ -1,9 +1,11 @@
-import pyodbc, datetime, enum
+# coding: utf-8
+import pyodbc, datetime, enum, os, secrets
+from PIL import Image
 from app import app
 from flask import request, render_template, url_for, redirect, flash, session
-from app.models import User, ContactNumber, SapNumber, History, StatusEnum, Return, ReturnStatus
+from app.models import User, ContactNumber, SapNumber, History, StatusEnum, Return, ReturnStatus, DPN
 from queue import Queue
-from app.forms import HistoryForm, ReturnForm
+from app.forms import HistoryForm, ReturnForm, UpdateAccountImage, AddSapForm
 from wtforms.validators import ValidationError
 from . import db, login_manager
 from flask import Blueprint
@@ -25,10 +27,32 @@ main = Blueprint('main', __name__)
 def homepage():
         return render_template('base.html')
 
-@main.route('/profile')
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/css/images', picture_fn)
+
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
+
+@main.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.username)
+    form = UpdateAccountImage()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
+        db.session.commit()
+        flash('Your account image has been updated!', 'success')
+        return redirect(url_for('main.profile'))
+    image_file = url_for('static', filename='css/images/' + current_user.image_file)
+    return render_template('profile.html', title='Account', image_file=image_file, form=form, name=current_user.username, current_user=current_user)
 
 @main.route('/check-contacts-for-sap-number', methods=('GET', 'POST'))
 @login_required
@@ -116,3 +140,20 @@ def active_return():
                 .order_by(Return.create_date.desc())\
                 .paginate(page=page, per_page=20)
         return render_template('active_return.html', active = active)
+
+@main.route('/add-sap', methods=['GET', 'POST'])
+@login_required
+def add_sap():
+        form = AddSapForm()
+        if request.method == 'POST' and form.validate_on_submit():
+                dpn_list = request.form.getlist('dpn_first')
+                sap_num = SapNumber(sap_number = request.form.get('sp_num'))
+                for el in dpn_list:
+                        dpn = DPN.query.filter_by(id = el).first()
+                        contact = ContactNumber(description = dpn.dpn)
+                        sap_num.contacts.append(contact) 
+                db.session.add(sap_num)
+                db.session.commit()
+                flash("SAP № з контактами додано успішно!", 'success')
+                return redirect(url_for('main.add_sap'))
+        return render_template('add_sap.html', form = form)

@@ -40,6 +40,47 @@ body {
   list-style-type: none;
 }
 
-/* #navbarText{
-  margin-left: 75%;
-} */
+.navbar-light .navbar-nav .nav-link {
+  font-size: 16px;
+}
+
+.navbar {
+  margin-bottom: 1%;
+  font-family: 'Roboto', sans-serif;
+}
+
+label {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+.page-item.active .page-link {
+  background-color: #343a40;
+  border-color: #454d55;
+}
+
+.page-link {
+  color: #060606;
+}

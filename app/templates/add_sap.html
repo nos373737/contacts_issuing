@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head_js %}
+
+<!-- <script src="{{url_for('static',filename='js/main.js')}}"></script> -->
+
+{% endblock head_js %}
+
+{% block content %}
+<div class="container">
+  <form action="/add-sap" method="post">
+    <div class="form-row">
+      <td>{{ form.csrf_token }}</td>
+      <div class="col-md-3 mb-3">
+        <label for="sp_num">{{ form.sp_num.label }}</label>
+        {{ form.sp_num(class_="form-control") }}
+        {% if form.sp_num.errors %}
+        <ul id="errors" class="errors">
+          {% for error in form.sp_num.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="dpn_first">{{ form.dpn_first.label }}</label>
+        {{ form.dpn_first(class="custom-select") }}
+        {% if form.dpn_first.errors %}
+        <ul id="errors" class="errors">
+          {% for error in form.dpn_first.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+    <button class="btn btn-outline-info" type="submit">Додати SAP №</button>
+  </form>
+</div>
+
+{% endblock %}
+

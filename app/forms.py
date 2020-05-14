@@ -2,7 +2,7 @@ from app import app
 from . import db
 from werkzeug.security import check_password_hash
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
-from wtforms.ext.sqlalchemy.orm import model_form
+from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, InputRequired, ValidationError
 from wtforms import (StringField,
                      TextAreaField,
@@ -12,7 +12,7 @@ from wtforms import (StringField,
                      SelectField,
                      Form)
 from flask_wtf import FlaskForm 
-from app.models import History, SapNumber, Return, ContactNumber, ReturnStatus, StatusEnum, User
+from app.models import History, SapNumber, Return, ContactNumber, ReturnStatus, StatusEnum, User, DPN
 
 # def all_sap_numbers():
 #     return db.session.query(SapNumber).all()
@@ -89,6 +89,20 @@ def user_check(form, field):
 # Login form
 
 class LoginForm(FlaskForm):
-    username = StringField(("Username"), [InputRequired(), user_check])
-    password = PasswordField(("Password"), [InputRequired(),
+    username = StringField(("Ім'я користувача"), [InputRequired(), user_check])
+    password = PasswordField(("Пароль"), [InputRequired(),
     Length(8, message="Довжина паролю повинна складати мінімум 8 символів!")])
+
+class UpdateAccountImage(FlaskForm):
+    picture = FileField('Змінити зображення користувача', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Змінити')
+
+def all_dpn():
+        return db.session.query(DPN).all()
+
+class AddSapForm(FlaskForm):
+    sp_num = StringField(("Sap Number"), [InputRequired(),
+    Length(8, 8, message="Довжина SAP № має складати 8 символів!")])
+    dpn_first = QuerySelectMultipleField(("DPN List"), query_factory=all_dpn, allow_blank=False, validators=[InputRequired()])
+
+    
