@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
-    pib = db.Column(db.Unicode(50))
+    pib = db.Column(db.String(50))
     tab_nomer = db.Column(db.String(10), unique=True)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     group = db.Column(db.Enum(EmployeeGroup), default=EmployeeGroup.user)

@@ -1,10 +1,9 @@
 # coding: utf-8
-import pyodbc, datetime, enum, os, secrets
+import datetime, enum, os, secrets
 from PIL import Image
 from app import app
 from flask import request, render_template, url_for, redirect, flash, session
 from app.models import User, ContactNumber, SapNumber, History, StatusEnum, Return, ReturnStatus, DPN
-from queue import Queue
 from app.forms import HistoryForm, ReturnForm, UpdateAccountImage, AddSapForm
 from wtforms.validators import ValidationError
 from . import db, login_manager
