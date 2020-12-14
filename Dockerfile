@@ -1,6 +1,5 @@
 FROM tiangolo/uwsgi-nginx-flask:python3.6
 
-
 # install FreeTDS and dependencies
 RUN apt-get update \
  && apt-get install unixodbc -y \
@@ -18,10 +17,10 @@ Setup = /usr/lib/x86_64-linux-gnu/odbc/libtdsS.so" >> /etc/odbcinst.ini
 COPY . /app
 
 WORKDIR /app
-RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt --proxy=10.49.0.50:8080
-#RUN pip install -r requirements.txt 
+#RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt --proxy=10.49.0.50:8080
+RUN pip install -r requirements.txt 
 
-EXPOSE 8888
+EXPOSE 5000
 
 CMD ["python", "run.py"]
 

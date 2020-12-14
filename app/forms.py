@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 from app import app
 from . import db
 from werkzeug.security import check_password_hash
