@@ -11,6 +11,7 @@
 <script src="{{url_for('static',filename='js/jquery-3.4.1.min.js')}}"></script>
 <script src="{{url_for('static',filename='js/jquery-3.4.1.slim.min.js')}}"></script>
 <script src="{{url_for('static',filename='js/popper.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/sweetalert.min.js')}}"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -20,130 +21,103 @@
 {% endblock head_js %}
 
 {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-  <div class="alert alert-success alert-dismissible">
-        <ul>
-        {% for category, message in messages %}
-          <li class="{{ category }}"><strong>{{ message }}</strong></li>
-        {% endfor %}
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        </ul>
-    </div>
-    
-  {% endif %}
+{% if messages %}
+{% for category, message in messages %}
+<script>
+  setTimeout(function () { swal("{{ message }}", "Гарна робота!", "success"); }, 1);
+</script>
+
+{% endfor %}
+
+{% endif %}
 {% endwith %}
 
 {% block body %}
-    <body>
-      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d3ecff;">
-        <a class="navbar-brand" href="/">AEU</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav ml-auto">
-            <!-- <li class="nav-item active">
-                      <a class="nav-link" href="/">Головна <span class="sr-only">(current)</span></a>
-                    </li> -->
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.issuing_bays') }}">Видача бухт</a>
-            </li>
-            {% endif %}
-            <!-- <li class="nav-item">
-                      <a class="nav-link" href="{{ url_for('main.check_contacts_post') }}">Перевірка контакту для SAP №</a>
-                    </li> -->
-            <!-- <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.issued_bays_list') }}">Видані бухти</a>
-                    </li> -->
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.bays_return') }}">Повернення бухти</a>
-            </li>
-            {% endif %}
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <a href="{{ url_for('main.profile') }}" class="nav-link">
-                Профіль
-              </a>
-            </li>
-            {% endif %}
-            {% if not current_user.is_authenticated %}
-            <li class="nav-item">
-              <a href="{{ url_for('auth.login') }}" class="nav-link">
-                Увійти
-              </a>
-            </li>
-            {% endif %}
-            <!-- {% if not current_user.is_authenticated %}
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d3ecff;">
+    <a class="navbar-brand" href="/">AEU</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav ml-auto">
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.issuing_bays') }}">Видача бухт</a>
+        </li>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.bays_return') }}">Повернення бухти</a>
+        </li>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{{ url_for('main.profile') }}" class="nav-link">
+            Профіль
+          </a>
+        </li>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{{ url_for('auth.login') }}" class="nav-link">
+            Увійти
+          </a>
+        </li>
+        {% endif %}
+        <!-- {% if not current_user.is_authenticated %}
                     <li class="nav-item">
                       <a href="{{ url_for('auth.signup') }}" class="nav-link">
                         Зареєструватись
                       </a>
                     </li>
                     {% endif %} -->
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <a href="{{ url_for('auth.logout') }}" class="nav-link">
-                Вийти
-              </a>
-            </li>
-            {% endif %}
-            {% if current_user.is_authenticated %}
-            <li class="nav-item dropdown">
-              <div class="btn-group dropleft">
-                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  Додатково
-                </button>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{{ url_for('main.issued_bays_list') }}">Видані бухти</a>
-                  <a class="dropdown-item" href="{{ url_for('main.active_return') }}">Активні повернені бухти</a>
-                  <a class="dropdown-item" href="{{ url_for('main.return_history') }}">Історія поверненя</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ url_for('main.check_contacts_post') }}">Перевірка контакту для SAP №</a>
-                  {% if current_user.group.value == 'Admin' %}
-                  <a class="dropdown-item" href="{{ url_for('main.add_sap') }}">Додати SAP №</a>
-                  {% endif %}
-                  {% if current_user.group.value == 'Admin' %}
-                  <a class="dropdown-item" href="#">Додати користувача</a>
-                  {% endif %}
-                </div>
-              </div>
-            </li>
-            {% endif %}
-          </ul>
-          <!-- <span class="navbar-text">
-                    Navbar text with an inline element
-                  </span> -->
-        </div>
-      </nav>
-        <!-- <div class="container">
-            <div class="logo">
-                <a href="/"><img src="{{url_for('static', filename='css/images/logo_basic.png')}}" /></a>
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{{ url_for('auth.logout') }}" class="nav-link">
+            Вийти
+          </a>
+        </li>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <div class="btn-group dropleft">
+            <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Додатково
+            </button>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{ url_for('main.issued_bays_list') }}">Видані бухти</a>
+              <a class="dropdown-item" href="{{ url_for('main.active_return') }}">Активні повернені бухти</a>
+              <a class="dropdown-item" href="{{ url_for('main.return_history') }}">Історія поверненя</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{ url_for('main.check_contacts_post') }}">Перевірка контакту для SAP №</a>
+              {% if current_user.group.value == 'Admin' %}
+              <a class="dropdown-item" href="{{ url_for('main.add_sap') }}">Додати SAP №</a>
+              {% endif %}
+              {% if current_user.group.value == 'Admin' %}
+              <a class="dropdown-item" href="#">Додати користувача</a>
+              {% endif %}
             </div>
-            <nav>
-                <ul>
-                    <li><a href="/">Головна</a></li>
-                    <li><a href="{{ url_for('main.issuing_bays') }}">Видача бухт</a></li>
-                    <li><a href="{{ url_for('main.check_contacts_post') }}">Перевірка контакту для SAP №</a></li>
-                    <li><a href="{{ url_for('main.issued_bays_list') }}">Видані бухти</a></li>
-                    <li><a href="{{ url_for('main.bays_return') }}">Повернення бухти</a></li>
-                </ul> 
-            </nav>
-        </div> -->
+          </div>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
 
-    {% block content %}
-    {% endblock %}
+  {% block content %}
+  {% endblock %}
 
-    <footer class="footer" style="background-color: #d3ecff;">
-        <div class="container">
-          <span class="text-muted">Copyright (c) 2019 AEU.</span>
-        </div>
-        
-    </footer>
-            <!-- <div class="footerBottom">
+  <footer class="footer" style="background-color: #d3ecff;">
+    <div class="container">
+      <span class="text-muted">Copyright (c) 2019 AEU.</span>
+    </div>
+
+  </footer>
+  <!-- <div class="footerBottom">
                 <div class="socBox">
                     <a id="social-icon" href="https://www.facebook.com/aeu.chernivtsi" target="_blank">
                         <i class="fab fa-facebook-f"></i>
@@ -153,5 +127,5 @@
                     </a>
                 </div>
             </div> -->
-    </body> 
+</body>
 {% endblock %}

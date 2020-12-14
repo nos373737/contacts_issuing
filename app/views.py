@@ -1,5 +1,5 @@
 # coding: utf-8
-import datetime, enum, os, secrets
+import pyodbc, datetime, enum, os, secrets 
 from PIL import Image
 from app import app
 from flask import request, render_template, url_for, redirect, flash, session
@@ -38,7 +38,7 @@ def save_picture(form_picture):
     i.save(picture_path)
 
     return picture_fn
-
+# User profile route and image changing
 @main.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -48,11 +48,11 @@ def profile():
             picture_file = save_picture(form.picture.data)
             current_user.image_file = picture_file
         db.session.commit()
-        flash('Your account image has been updated!', 'success')
+        flash('Зображення успішно оновлено!', 'success')
         return redirect(url_for('main.profile'))
     image_file = url_for('static', filename='css/images/' + current_user.image_file)
-    return render_template('profile.html', title='Account', image_file=image_file, form=form, name=current_user.username, current_user=current_user)
-
+    return render_template('profile.html', image_file=image_file, form=form, current_user=current_user)
+# Check the dpn relevant to sap number
 @main.route('/check-contacts-for-sap-number', methods=('GET', 'POST'))
 @login_required
 def check_contacts_post():
@@ -94,6 +94,7 @@ def issuing_bays():
                 serial_number = request.form.get("serial_number"),
                 status = StatusEnum.ok)
                 flash("Бухта видана успішно!", 'success')
+                #sweetify.success(request, 'You did it', text='Good job! Бухта видана успішно!', persistent='Hell yeah')
                 return redirect(url_for('main.issuing_bays'))
         return render_template('history.html', form=form)
 
