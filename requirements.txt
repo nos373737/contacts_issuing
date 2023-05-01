@@ -2,7 +2,7 @@ apispec[yaml]==1.1.1
 flask-jwt-extended==3.18.0
 flask-sqlalchemy==2.4.0
 flask-wtf==0.14.2
-flask==1.1.1
+flask==2.3.2
 itsdangerous==1.1.0       # via flask
 jinja2==2.11.3            # via flask, flask-babel
 pyyaml==5.4               # via apispec
